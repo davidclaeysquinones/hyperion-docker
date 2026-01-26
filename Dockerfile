@@ -33,6 +33,7 @@ ENV GID=1000
 
 RUN groupadd -f hyperion
 RUN useradd -r -s /bin/bash -g hyperion hyperion
+RUN bash /tmp/install.sh
 
 RUN echo "#!/bin/bash" > /start.sh
 RUN echo "groupmod -g \$2 hyperion" >> /start.sh
