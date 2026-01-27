@@ -11,7 +11,5 @@ done
 
 groupmod -g $gid hyperion
 usermod -u $uid hyperion
-ln -s /root/.hyperion /config 
 chown -R hyperion:hyperion /config
-sudo -u hyperion /usr/bin/hyperiond -v --service --userdata /config
-hyperiond -i
+sudo -u hyperion /usr/bin/hyperiond -i --userdata /config
