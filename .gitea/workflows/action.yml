@@ -40,7 +40,7 @@ jobs:
                 org.opencontainers.image.authors=Davidquinonescl
                 org.opencontainers.image.documentation=https://git.claeyscloud.com/david/hyperion-docker
             images: |
-                davidquinonescl/hyperion-docker
+                ghcr.io/davidquinonescl/hyperion-docker
             tags: |
                type=semver,pattern={{raw}}
                type=sha
