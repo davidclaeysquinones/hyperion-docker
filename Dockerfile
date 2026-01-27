@@ -1,12 +1,21 @@
 FROM debian:bookworm
 
+COPY start.sh .
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get upgrade -y -q && \
-    apt-get install -y wget gpg sudo libpython3.9 && \
-    wget -qO /tmp/install.sh https://raw.github.com/hyperion-project/hyperion.ng/master/bin/scripts/docker-compile.sh && \
-    chmod +x /tmp/install.sh && \
-    apt-get clean
+    apt-get install -y wget curl sudo gpg apt-transport-https lsb-release && \
+    wget -qO /tmp/hyperion.pub.key https://releases.hyperion-project.org/hyperion.pub.key  && \
+    gpg --dearmor -o /usr/share/keyrings/hyperion.pub.gpg /tmp/hyperion.pub.key && \
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hyperion.pub.gpg] https://apt.releases.hyperion-project.org/ $(lsb_release -cs) main"  > /etc/apt/sources.list.d/hyperion.list && \
+    apt-get update && \
+    apt-get install -y hyperion && \
+    groupadd -f hyperion && \
+    useradd -r -s /bin/bash -g hyperion hyperion && \
+    chmod 777 /start.sh && \
+    mkdir /config && \
+    apt-get clean && \
+    rm -rf /var/cache/apk/*
 
 
 # Flatbuffers Server port
@@ -31,18 +40,5 @@ EXPOSE 8092
 ENV UID=1000
 ENV GID=1000
 
-RUN groupadd -f hyperion
-RUN useradd -r -s /bin/bash -g hyperion hyperion
-RUN bash /tmp/install.sh
-
-RUN echo "#!/bin/bash" > /start.sh
-RUN echo "groupmod -g \$2 hyperion" >> /start.sh
-RUN echo "usermod -u \$1 hyperion" >> /start.sh
-RUN echo "chown -R hyperion:hyperion /config" >> /start.sh
-RUN echo "sudo -u hyperion /usr/bin/hyperiond -v --service -u /config" >> /start.sh
-
-RUN chmod 777 /start.sh
-
-VOLUME /config
-
-CMD [ "bash", "-c", "/start.sh ${UID} ${GID}" ]
+SHELL ["/bin/bash", "-c"]
+ENTRYPOINT bash start.sh uid="$UID" gid="$GID"
