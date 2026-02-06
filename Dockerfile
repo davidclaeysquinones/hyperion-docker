@@ -8,6 +8,7 @@ RUN apt-get update && \
 
 FROM debian:trixie
 COPY start.sh .
+COPY initialconfig.json .
 COPY --from=builder /usr/bin/hyperiond /usr/bin/hyperiond
 RUN apt-get update && \
     apt-get upgrade -y -q && \
@@ -45,5 +46,4 @@ ENV UID=1000
 ENV GID=1000
 
 SHELL ["/bin/bash", "-c"]
-ENTRYPOINT bash start.sh uid="$UID" gid="$GID"
-#ENTRYPOINT tail -f /dev/null
+ENTRYPOINT bash start.sh uid="$UID" gid="$GID" server_address="$SERVER_ADDRESS"

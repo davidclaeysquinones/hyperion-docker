@@ -4,7 +4,7 @@
 for arg in "$@"; do
    case "$arg" in
       uid=*) uid="${arg#*=}" ;;
-      gid=*) gid="${arg#*=}" ;;
+      gid=*) gid="${arg#*=}" ;; 
    esac
 done
 
@@ -12,4 +12,8 @@ done
 groupmod -g $gid hyperion
 usermod -u $uid hyperion
 chown -R hyperion:hyperion /config
+if test -f "initialconfig.json"; then
+   sudo  -u hyperion /usr/bin/hyperiond/bin/hyperiond -i --userdata /config --importConfig initialconfig.json
+   rm initialconfig.json
+fi
 sudo -u hyperion /usr/bin/hyperiond/bin/hyperiond -i --userdata /config

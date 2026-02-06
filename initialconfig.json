@@ -1,0 +1,11 @@
+{
+    "global": {
+      "settings":{
+         "network":{
+            "internetAccessAPI":true,
+            "localApiAuth":false,
+            "restirctedInternetAccessAPI":false
+         }
+	   }
+    }
+}
