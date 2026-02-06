@@ -1,22 +1,26 @@
-FROM debian:bookworm
-
-COPY start.sh .
-RUN export DEBIAN_FRONTEND=noninteractive && \
-    apt-get update && \
+FROM  debian:trixie AS builder
+COPY build.sh .
+RUN apt-get update && \
     apt-get upgrade -y -q && \
-    apt-get install -y wget curl sudo gpg apt-transport-https lsb-release && \
-    wget -qO /tmp/hyperion.pub.key https://releases.hyperion-project.org/hyperion.pub.key  && \
-    gpg --dearmor -o /usr/share/keyrings/hyperion.pub.gpg /tmp/hyperion.pub.key && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hyperion.pub.gpg] https://apt.releases.hyperion-project.org/ $(lsb_release -cs) main"  > /etc/apt/sources.list.d/hyperion.list && \
-    apt-get update && \
-    apt-get install -y hyperion && \
+    chmod +x build.sh && \
+    bash build.sh
+
+
+FROM debian:trixie
+COPY start.sh .
+COPY --from=builder /usr/bin/hyperiond /usr/bin/hyperiond
+RUN apt-get update && \
+    apt-get upgrade -y -q && \
+    apt-get install -y sudo tzdata libfontconfig1 libglib-2.0 libproxy1v5 libcec-dev && \
+    chmod 755 /usr/bin/hyperiond && \
     groupadd -f hyperion && \
     useradd -r -s /bin/bash -g hyperion hyperion && \
     chmod 777 /start.sh && \
     mkdir /config && \
+    chmod 777 /config && \
     apt-get clean && \
-    rm -rf /var/cache/apk/*
-
+    rm -rf /var/cache/apk/* && \
+    rm -rf /usr/share/man
 
 # Flatbuffers Server port
 EXPOSE 19400
@@ -42,3 +46,4 @@ ENV GID=1000
 
 SHELL ["/bin/bash", "-c"]
 ENTRYPOINT bash start.sh uid="$UID" gid="$GID"
+#ENTRYPOINT tail -f /dev/null

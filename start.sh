@@ -12,4 +12,4 @@ done
 groupmod -g $gid hyperion
 usermod -u $uid hyperion
 chown -R hyperion:hyperion /config
-sudo -u hyperion /usr/bin/hyperiond -i --userdata /config
+sudo -u hyperion /usr/bin/hyperiond/bin/hyperiond -i --userdata /config
