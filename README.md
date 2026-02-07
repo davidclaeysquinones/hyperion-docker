@@ -59,7 +59,17 @@ GID=1100
 
 ### Security considerations
 
+#### Network segmentation
+
 By default Hyperion uses network segmentation in order to improve security with mDNS and SSDP.
 In a standard setup (outside of a Docker environment) this makes sense since you wouldn't want accept packets from other networks.
 However in a Docker environment this makes things more complicated since unless you use host mode or specific network setup all requests would be rejected.
 In order to make setup more straightforward network segmentation has been disabled. This doesn't mean that you should expose your container to the internet !
+
+#### Supply chain attacks
+
+This repository is made in good faith and only intends to provide something useful.
+However you should never take something from the internet without having a good look at it.
+So review the source code in order to make sure nothing fishy is going on.
+Furthermore the build process includes downloading and compiling the source code.
+In most cases this will be just fine but if you're worried about supply chain attacks that is definitely a risk. 
