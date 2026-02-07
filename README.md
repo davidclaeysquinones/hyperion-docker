@@ -15,7 +15,8 @@ The image has the following characteristics:
 1. It's based on the [official Debian 13 (trixie) docker image](https://hub.docker.com/_/debian)
 2. It includes a custom build of hyperion designed to take away uncecesarry dependencies
 3. Maps the `/config` dirctory as an external volume, to keep your settings
-4. Runs hyperiond service as non-root user. Default UID:GID are 1000:1000 but they can be easily changed through environment variables
+4. It disables network segmentation so that by default you don't have to use special network settings
+5. Runs hyperiond service as non-root user. Default UID:GID are 1000:1000 but they can be easily changed through environment variables
 
 ### Standard configuration
 
@@ -39,40 +40,6 @@ services:
     restart: unless-stopped
 ```
 
-
-You may want to adapt the "ports" section adding other port mappings for specific cases (e.g. "2100:2100/udp" for Philips Hue in Entertainment mode).
-
-An alternative, especially if you need advanced functions like mDNS and SSDP services, could be running the cointainer in a macvlan network bridged to your local one. The following is an example that exposes the hyperionng container with the 192.168.1.17 IP in a local network 192.168.1.0/24 with the gateway 192.168.1.1, please adapt the configuration to your specific case.
-
-```yaml
-version: '3.3'
-
-services:
-  hyperionng:
-    image: hyperionng:latest
-    container_name: hyperionng
-    volumes:
-      - hyperionng-config:/config
-    networks:
-      mylannet:
-         ipv4_address: 192.168.1.17
-    restart: unless-stopped
-volumes:
-  hyperionng-config:
-# define networks
-networks:
-  mylannet:
-    name: mylannet
-    driver: macvlan
-    driver_opts:
-      parent: eth0
-    ipam:
-      config:
-        - subnet: 192.168.1.0/24
-          gateway: 192.168.1.1
-          ip_range: 192.168.1.64/26
-```
-
 Moreover, if you want to use some hardware devices (USB. serial, video, and so on), you need to passthrough the correct one adding a devices section in the compose file (the following is jut an example):
 
 ```yaml
@@ -89,3 +56,10 @@ If you want to use different UID and GID, you can add a `.env` file in the same 
 UID=1100
 GID=1100
 ```
+
+### Security considerations
+
+By default Hyperion uses network segmentation in order to improve security with mDNS and SSDP.
+In a standard setup (outside of a Docker environment) this makes sense since you wouldn't want accept packets from other networks.
+However in a Docker environment this makes things more complicated since unless you use host mode or specific network setup all requests would be rejected.
+In order to make setup more straightforward network segmentation has been disabled. This doesn't mean that you should expose your container to the internet !
