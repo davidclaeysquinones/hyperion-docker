@@ -42,6 +42,11 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}    
+      - name: Login to Github container registry
+        uses: https://github.com/docker/login-action@v3
+        with:
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_PASSWORD }}   
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
@@ -54,6 +59,7 @@ jobs:
             images: |
                 davidquinonescl/hyperion-docker
                 git.claeyscloud.com/david/hyperion-docker
+                ghcr.io/davidclaeysquinones/hyperion-docker
             flavor: |
                 latest=true
             tags: |
