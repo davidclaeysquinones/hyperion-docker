@@ -25,9 +25,9 @@ jobs:
       - name: Install Fetch
         run: |
             echo "Installing fetch"
-            sudo apt-get install -y curl
-            curl -fsSL https://deb.nodesource.com/setup_24.x | sudo -E bash -
-            sudo apt-get install -y nodejs
+            apt-get install -y curl
+            curl -fsSL https://deb.nodesource.com/setup_24.x | -E bash -
+            apt-get install -y nodejs
             npm install -g npm
             npm install node-fetch
       - name: Set up Docker Buildx
