@@ -59,10 +59,6 @@ jobs:
             tags: |
                 type=semver,pattern={{raw}}
                 type=sha    
-      - id: lowercase-repo
-        name: Lowercase repository name
-        run: |
-          echo "repository=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v5
         with:
