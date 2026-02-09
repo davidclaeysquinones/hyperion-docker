@@ -30,6 +30,11 @@ jobs:
           registry: git.claeyscloud.com
           username: nologin
           password: ${{ secrets.PACKAGE_TOKEN }}
+      - name: Login to DockerHub container registry
+        uses: https://github.com/docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}    
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
@@ -40,17 +45,27 @@ jobs:
                 org.opencontainers.image.authors=Davidquinonescl
                 org.opencontainers.image.documentation=https://git.claeyscloud.com/david/hyperion-docker
             images: |
+                davidquinonescl/hyperion-docker
                 git.claeyscloud.com/david/hyperion-docker
             flavor: |
                 latest=true
             tags: |
                 type=semver,pattern={{raw}}
-                type=sha
+                type=sha    
+      - id: lowercase-repo
+        name: Lowercase repository name
+        run: |
+          echo "repository=${GITHUB_REPOSITORY@L}" >> $GITHUB_OUTPUT
+      - name: Docker Hub Description
+        uses: peter-evans/dockerhub-description@v5
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}  
+          repository: ${{ steps.lowercase-repo.outputs.repository }}
       - name: Build and push
         uses: https://github.com/docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}            
-          labels: ${{ steps.meta.outputs.labels }}
-             
+          labels: ${{ steps.meta.outputs.labels }}   
