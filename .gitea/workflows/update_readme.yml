@@ -13,6 +13,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Install Docker
+        run: |
+            echo "Checking docker installation"
+            if command -v docker &> /dev/null; then
+                echo "Docker installation found"
+            else
+                echo "Docker installation not found. Docker will be installed"
+                curl -fsSL https://get.docker.com | sh
+            fi
       - name: Install Fetch
         run: |
             echo "Installing fetch"
