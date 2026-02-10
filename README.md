@@ -19,10 +19,11 @@ The image has the following characteristics:
 5. Runs hyperiond service as non-root user. Default UID:GID are 1000:1000 but they can be easily changed through environment variables
 
 A mirror of this repository can be found in [github](https://github.com/davidclaeysquinones/hyperion-docker).
-The image is distributed in the following container regestries :
+
+The image is distributed in the following container registries :
  - [gitea](https://git.claeyscloud.com/david/-/packages/container/hyperion-docker/latest)
  - [github](https://github.com/davidclaeysquinones/hyperion-docker/pkgs/container/hyperion-docker)
- - [Docker hub](https://hub.docker.com/repository/docker/davidquinonescl/hyperion-docker/general)
+ - [docker hub](https://hub.docker.com/repository/docker/davidquinonescl/hyperion-docker/general)
 
 ### Standard configuration
 
