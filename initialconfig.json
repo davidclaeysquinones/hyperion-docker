@@ -1,11 +1,19 @@
 {
-    "global": {
-      "settings":{
-         "network":{
-            "internetAccessAPI":true,
-            "localApiAuth":false,
-            "restirctedInternetAccessAPI":false
-         }
-	   }
-    }
+	"global": {
+		"settings": {
+			"general": {
+				"configVersion": "2.1.1",
+				"name": "Hyperion server",
+				"showOptHelp": true,
+				"watchedVersionBranch": "Stable"
+			},
+			"network": {
+				"internetAccessAPI": true,
+				"localApiAuth": false,
+				"restirctedInternetAccessAPI": false
+			}
+		}
+	},
+	"instanceIds": [],
+	"instances": []
 }
