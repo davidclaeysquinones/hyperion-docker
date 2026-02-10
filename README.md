@@ -27,6 +27,8 @@ version: '3.3'
 services:
   hyperionng:
     image: git.claeyscloud.com/david/hyperion-docker
+    #image: ghcr.io/davidclaeysquinones/hyperion-docker:latest
+    #image: davidquinonescl/hyperion-docker
     volumes:
       - /docker/hyperion:/config
     ports:
