@@ -25,6 +25,7 @@ The image is distributed in the following container registries :
  - [github](https://github.com/davidclaeysquinones/hyperion-docker/pkgs/container/hyperion-docker)
  - [docker hub](https://hub.docker.com/repository/docker/davidquinonescl/hyperion-docker/general)
 
+
 ### Standard configuration
 
 start the container with `docker compose up -d` with the following `docker-compose.yml` :
