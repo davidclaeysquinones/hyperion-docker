@@ -50,7 +50,7 @@ jobs:
 
             echo $(npm list -g | grep -c @actions/core)
             echo $(npm list -g | grep -c node-fetch)
-            package='@actions/core'
+            package='undici'
             if [ `npm list -g | grep -c $package` -eq 0 ]; then
                 npm install -g $package
             fi
