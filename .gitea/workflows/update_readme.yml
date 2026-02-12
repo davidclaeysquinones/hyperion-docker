@@ -22,7 +22,7 @@ jobs:
                 echo "Docker installation not found. Docker will be installed"
                 curl -fsSL https://get.docker.com | sh
             fi
-      - name: Install Fetch
+      - name: Install npm dependencies
         run: |
             echo "Installing fetch"
             install_node=$false
@@ -46,7 +46,7 @@ jobs:
                 apt-get install -y -q nodejs
             fi
 
-            package='node-fetch@2'
+            package='@actions/core'
             if [ `npm list -g | grep -c $package` -eq 0 ]; then
                 npm install $package -g
             fi
