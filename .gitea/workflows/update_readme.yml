@@ -46,6 +46,8 @@ jobs:
                 apt-get install -y -q nodejs
             fi
 
+            echo npm list -g | grep -c @actions/core
+            echo npm list -g | grep -c node-fetch
             package='@actions/core'
             if [ `npm list -g | grep -c $package` -eq 0 ]; then
                 npm install $package -g
