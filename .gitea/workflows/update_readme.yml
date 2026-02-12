@@ -35,12 +35,14 @@ jobs:
                 node_version=${node_version%\.*} # Remove trailing ".*".
                 node_version=$(($node_version)) # Convert the NodeJS version number from a string to an integer.
                 if [ $node_version -lt  24 ]; then
+                   echo $"removing outdated npm version"
                    install_node=true
                    apt-get remove nodejs npm
                 fi
             fi
 
             if $install_node; then
+                echo $"Installing node 24"
                 apt-get install -y curl
                 curl -fsSL https://deb.nodesource.com/setup_24.x | bash
                 apt-get install -y -q nodejs
@@ -50,7 +52,7 @@ jobs:
             echo $(npm list -g | grep -c node-fetch)
             package='@actions/core'
             if [ `npm list -g | grep -c $package` -eq 0 ]; then
-                npm install $package -g
+                npm install -g $package
             fi
       - name: Login to DockerHub container registry
         uses: https://github.com/docker/login-action@v3
