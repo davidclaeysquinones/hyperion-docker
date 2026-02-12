@@ -25,10 +25,27 @@ jobs:
       - name: Install Fetch
         run: |
             echo "Installing fetch"
+            install_node=$false
             if ! command -v node &> /dev/null; then
+                install_node=true
+            else
+                node_version=$(node -v)
+                node_version=${node_version:1} # Remove 'v' at the beginning
+                node_version=${node_version%\.*} # Remove trailing ".*".
+                node_version=${node_version%\.*} # Remove trailing ".*".
+                node_version=$(($node_version)) # Convert the NodeJS version number from a string to an integer.
+                if [ $node_version -lt  24 ]; then
+                   install_node=true
+                   sudo apt-get remove nodejs npm
+                fi
+            fi
+
+            if $install_node
                 apt-get install -y curl
                 curl -fsSL https://deb.nodesource.com/setup_24.x | bash
+                apt-get install -y -q nodejs
             fi
+
             package='node-fetch@2'
             if [ `npm list -g | grep -c $package` -eq 0 ]; then
                 npm install $package --no-shrinkwrap
