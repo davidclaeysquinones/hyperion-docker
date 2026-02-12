@@ -36,7 +36,7 @@ jobs:
                 node_version=$(($node_version)) # Convert the NodeJS version number from a string to an integer.
                 if [ $node_version -lt  24 ]; then
                    install_node=true
-                   sudo apt-get remove nodejs npm
+                   apt-get remove nodejs npm
                 fi
             fi
 
