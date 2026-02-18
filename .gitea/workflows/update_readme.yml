@@ -44,10 +44,17 @@ jobs:
             fi
 
             if $install_node; then
-                echo $"Installing node 24"
-                apt-get install -y -q curl
+                NODE_MAJOR=24
+                echo "Installing node ${NODE_MAJOR}"
+                apt-get update
+                apt-get install -y -q ca-certificates curl gnupg
+                mkdir -p /etc/apt/keyrings
                 curl -fsSL https://deb.nodesource.com/setup_24.x | bash
+                curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+                echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_MAJOR}.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
+                apt-get update
                 apt-get install -y -q nodejs
+                npm install npm --global
             fi
 
             echo "node version : " $(node -v)
