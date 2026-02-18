@@ -40,6 +40,18 @@ jobs:
                    echo $"removing outdated npm version"
                    install_node=true
                    apt-get remove nodejs npm
+                   apt-get purge nodejs
+                   rm -rf /usr/local/bin/npm 
+                   rm -rf /usr/local/share/man/man1/node* 
+                   rm -rf /usr/local/lib/dtrace/node.d 
+                   rm -rf ~/.npm 
+                   rm -rf ~/.node-gyp 
+                   rm -rf /opt/local/bin/node 
+                   rm -rf opt/local/include/node 
+                   rm -rf /opt/local/lib/node_modules  
+                   rm -rf /usr/local/lib/node*
+                   rm -rf /usr/local/include/node*
+                   rm -rf /usr/local/bin/node*
                 fi
             fi
 
