@@ -51,11 +51,11 @@ jobs:
 
             echo $(npm list -g | grep -c @actions/core)
             echo $(npm list -g | grep -c node-fetch)
-            # package='undici'
             package='node-fetch'
             if [ `npm list -g | grep -c $package` -eq 0 ]; then
                 npm install -g $package
             fi
+            echo "node version : " $(node -v)
       - name: Login to DockerHub container registry
         uses: https://github.com/docker/login-action@v3
         with:
