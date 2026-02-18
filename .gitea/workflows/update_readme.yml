@@ -46,6 +46,8 @@ jobs:
             if $install_node; then
                 NODE_MAJOR=24
                 echo "Installing node ${NODE_MAJOR}"
+                rm /etc/apt/keyrings/nodesource.gpg
+                rm /etc/apt/sources.list.d/nodesource.list
                 apt-get update
                 apt-get install -y -q ca-certificates curl gnupg
                 mkdir -p /etc/apt/keyrings
