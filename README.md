@@ -18,7 +18,7 @@ The image has the following characteristics:
 4. It disables network segmentation so that by default you don't have to use special network settings
 5. Runs hyperiond service as non-root user. Default UID:GID are 1000:1000 but they can be easily changed through environment variables
 
-A mirror of this repository can be found in [github](https://github.com/davidclaeysquinones/hyperion-docker).
+A mirror of this repository can be found in [github](https://github.com/davidclaeysquinones/hyperion-docker) and in [lavaforge](https://lavaforge.org/davidquinonescl/hyperion-docker).
 
 The image is distributed in the following container registries :
  - [gitea](https://git.claeyscloud.com/david/-/packages/container/hyperion-docker/latest)
@@ -34,7 +34,8 @@ version: '3.3'
 services:
   hyperionng:
     image: git.claeyscloud.com/david/hyperion-docker
-    #image: ghcr.io/davidclaeysquinones/hyperion-docker:latest
+    #image: lavaforge.org/davidclaeysquinones/hyperion-docker
+    #image: ghcr.io/davidclaeysquinones/hyperion-docker
     #image: davidquinonescl/hyperion-docker
     volumes:
       - /docker/hyperion:/config

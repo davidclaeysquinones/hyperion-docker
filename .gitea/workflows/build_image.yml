@@ -99,6 +99,12 @@ jobs:
           registry: ghcr.io
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_PASSWORD }}   
+      - name: Login to Lavaforge container registry
+        uses: https://github.com/docker/login-action@v3
+        with:
+          registry: lavaforge.org
+          username: ${{ secrets.LAVAFORGE_USERNAME }}
+          password: ${{ secrets.LAVAFORGE_PASSWORD }}   
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
@@ -112,6 +118,7 @@ jobs:
                 davidquinonescl/hyperion-docker
                 git.claeyscloud.com/david/hyperion-docker
                 ghcr.io/davidclaeysquinones/hyperion-docker
+                lavaforge.org/davidclaeysquinones/hyperion-docker
             flavor: |
                 latest=true
             tags: |
