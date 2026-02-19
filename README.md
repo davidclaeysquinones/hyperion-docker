@@ -22,6 +22,7 @@ A mirror of this repository can be found in [github](https://github.com/davidcla
 
 The image is distributed in the following container registries :
  - [gitea](https://git.claeyscloud.com/david/-/packages/container/hyperion-docker/latest)
+ - [lavaforge](https://lavaforge.org/davidquinonescl/-/packages/container/hyperion-docker/latest)
  - [github](https://github.com/davidclaeysquinones/hyperion-docker/pkgs/container/hyperion-docker)
  - [docker hub](https://hub.docker.com/repository/docker/davidquinonescl/hyperion-docker/general)
 
