@@ -118,7 +118,7 @@ jobs:
                 davidquinonescl/hyperion-docker
                 git.claeyscloud.com/david/hyperion-docker
                 ghcr.io/davidclaeysquinones/hyperion-docker
-                lavaforge.org/davidclaeysquinones/hyperion-docker
+                lavaforge.org/davidquinonescl/hyperion-docker
             flavor: |
                 latest=true
             tags: |

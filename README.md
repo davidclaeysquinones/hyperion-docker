@@ -34,7 +34,7 @@ version: '3.3'
 services:
   hyperionng:
     image: git.claeyscloud.com/david/hyperion-docker
-    #image: lavaforge.org/davidclaeysquinones/hyperion-docker
+    #image: lavaforge.org/davidquinonescl/hyperion-docker
     #image: ghcr.io/davidclaeysquinones/hyperion-docker
     #image: davidquinonescl/hyperion-docker
     volumes:
